@@ -7,11 +7,11 @@ interface Props {
 
 export const Button: React.FC<Props> = ({ variant = "primary", children }) => {
   const baseStyles =
-    "px-4 py-2 rounded cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2";
+    "px-2 sm:px-4 py-2 rounded cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variants = {
-    primary: "bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500",
+    primary: "border-2 border-orange-600 bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500",
     secondary:
-      "bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400",
+      "border-2 border-gray-600 bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400",
   };
   const variantStyles = variants[variant] || variants.primary;
   return (
