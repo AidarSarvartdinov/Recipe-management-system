@@ -2,10 +2,12 @@ import React from "react";
 
 interface Props {
   variant?: "primary" | "secondary";
+  type?: "reset" | "button" | "submit" | undefined;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
-export const Button: React.FC<Props> = ({ variant = "primary", children }) => {
+export const Button: React.FC<Props> = ({ variant = "primary", type, onClick, children }) => {
   const baseStyles =
     "px-2 sm:px-4 py-2 rounded cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variants = {
@@ -15,6 +17,6 @@ export const Button: React.FC<Props> = ({ variant = "primary", children }) => {
   };
   const variantStyles = variants[variant] || variants.primary;
   return (
-    <button className={`${baseStyles} ${variantStyles}`}>{children}</button>
+    <button type={type} onClick={onClick} className={`${baseStyles} ${variantStyles}`}>{children}</button>
   );
 };

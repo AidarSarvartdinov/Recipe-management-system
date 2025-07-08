@@ -5,26 +5,26 @@ const recipe = {
   description:
     "Разнообразьте свое утреннее меню, добавив овощи в обычную яичницу. Хорошим сочетанием будет смесь баклажанов и томатов. Обжарьте нарезанные овощи на сковороде, а затем залейте яйцами и дождитесь, когда они приготовятся до нужной консистенции.",
   img: "https://cdn.food.ru/unsigned/fit/2048/1536/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI1MDYxNS80U01SVXguanBlZw.webp",
-  ingredients: [
+  products: [
     {
       name: "Помидор",
-      amount: 2,
-      gramming: "шт",
+      quantity: 2,
+      unit: "шт",
     },
     {
       name: "Баклажан",
-      amount: 120,
-      gramming: "гр",
+      quantity: 120,
+      unit: "гр",
     },
     {
       name: "Яйцо",
-      amount: 2,
-      gramming: "шт",
+      quantity: 2,
+      unit: "шт",
     },
     {
       name: "Растительное масло",
-      amount: 4,
-      gramming: "ст. л.",
+      quantity: 4,
+      unit: "ст. л.",
     },
   ],
 };
@@ -43,9 +43,9 @@ const page = () => {
 
         <h2 className="text-lg sm:text-xl font-semibold mb-2">Ingredients:</h2>
         <ul className="list-disc list-inside space-y-1 text-gray-800">
-          {recipe.ingredients.map((ingredient) => (
-            <li key={ingredient.name}>
-              {ingredient.name}: {ingredient.amount} {ingredient.gramming}
+          {recipe.products.map((product) => (
+            <li key={product.name}>
+              {product.name}: {product.quantity} {product.unit}
             </li>
           ))}
         </ul>
