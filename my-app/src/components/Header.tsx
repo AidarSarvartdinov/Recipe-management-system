@@ -12,7 +12,7 @@ const Header: React.FC<Props> = ({ username }) => {
   const [isOpen, setIsopen] = React.useState(false);
   return (
     <>
-      <nav className="bg-white shadow-md px-4 py-4">
+      <nav className="bg-white shadow-md px-4 py-2">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
