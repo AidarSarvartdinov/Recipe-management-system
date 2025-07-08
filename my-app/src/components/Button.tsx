@@ -4,10 +4,11 @@ interface Props {
   variant?: "primary" | "secondary";
   type?: "reset" | "button" | "submit" | undefined;
   onClick?: () => void;
+  disabled?: boolean
   children: React.ReactNode;
 }
 
-export const Button: React.FC<Props> = ({ variant = "primary", type, onClick, children }) => {
+export const Button: React.FC<Props> = ({ variant = "primary", type, onClick, disabled, children }) => {
   const baseStyles =
     "px-2 sm:px-4 py-2 rounded cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variants = {
@@ -17,6 +18,6 @@ export const Button: React.FC<Props> = ({ variant = "primary", type, onClick, ch
   };
   const variantStyles = variants[variant] || variants.primary;
   return (
-    <button type={type} onClick={onClick} className={`${baseStyles} ${variantStyles}`}>{children}</button>
+    <button type={type} disabled={disabled} onClick={onClick} className={`${baseStyles} ${variantStyles}`}>{children}</button>
   );
 };
