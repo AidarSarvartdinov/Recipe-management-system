@@ -23,8 +23,7 @@ export default function Page() {
     reset
   } = useForm<RegisterFormInputs>();
 
-  const [firebaseError, setFirebaseError] = useState<string | null>(null);
-  const password = watch("password", "");
+  const [firebaseError, setFirebaseError] = useState<string | null>(null);;
 
   const router = useRouter();
 

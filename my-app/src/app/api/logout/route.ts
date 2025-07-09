@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
-import { NextRequest } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   const cookie = await cookies();
   cookie.delete('token');
 }
