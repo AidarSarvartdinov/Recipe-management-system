@@ -1,9 +1,9 @@
-import Card from "@/components/Card";
-import React from "react";
-import { initAdmin } from "../../../../firebase/firebaseAdmin";
-import { getAllRecipies } from "@/lib/getAllRecipes";
-import { getServerAuthUser } from "@/lib/getServerAuthUser";
-import Link from "next/link";
+import Card from '@/components/Card';
+import React from 'react';
+import { initAdmin } from '../../../../firebase/firebaseAdmin';
+import { getAllRecipies } from '@/lib/getAllRecipes';
+import { getServerAuthUser } from '@/lib/getServerAuthUser';
+import Link from 'next/link';
 
 const Page = async () => {
   await initAdmin();

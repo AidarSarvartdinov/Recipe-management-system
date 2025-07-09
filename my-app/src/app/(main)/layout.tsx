@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import React from "react";
+import Header from '@/components/Header';
+import React from 'react';
 
 const layout = ({
   children,
@@ -8,8 +8,8 @@ const layout = ({
 }>) => {
   return (
     <div>
-        <Header />
-        <main>{children}</main>
+      <Header />
+      <main>{children}</main>
     </div>
   );
 };

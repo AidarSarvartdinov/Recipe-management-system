@@ -26,6 +26,11 @@ interface Recipe {
 }
 
 const AddRecipePage = () => {
+
+  if (!auth.currentUser) {
+    return <h1>You are not authorized</h1>
+  }
+
   const {
     register,
     control,

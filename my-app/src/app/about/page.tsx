@@ -16,7 +16,9 @@ const Page = () => {
           list of other recipes.
         </div>
         <div className="flex gap-4 mt-4 pb-8 sm:mt-6">
-          <Button>Go to recipes</Button>
+          <Link href="/recipes/my">
+            <Button>Go to recipes</Button>
+          </Link>
           <Link href="/">
             <Button variant="secondary">Home page</Button>
           </Link>
