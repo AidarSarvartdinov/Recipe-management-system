@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import admin from 'firebase-admin';
 
 interface FirebaseAdminParams {
   projectId: string;
@@ -8,7 +8,7 @@ interface FirebaseAdminParams {
 }
 
 function formatPrivateKey(key: string) {
-  return key.replace(/\\n/g, "\n");
+  return key.replace(/\\n/g, '\n');
 }
 
 export function createFirebasseAdminApp(params: FirebaseAdminParams) {

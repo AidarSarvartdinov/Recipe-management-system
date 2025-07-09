@@ -1,11 +1,13 @@
-import { Recipe } from "@/types/Recipe";
-import { getFirestore } from "firebase-admin/firestore";
+import { Recipe } from '@/types/Recipe';
+import { getFirestore } from 'firebase-admin/firestore';
 
-export const getRecipesByUser = async (userId: string): Promise<Omit<Recipe, 'products'>[]> => {
+export const getRecipesByUser = async (
+  userId: string,
+): Promise<Omit<Recipe, 'products'>[]> => {
   const firestore = getFirestore();
   const recipeSnapshot = await firestore
-    .collection("recipes")
-    .where("userId", "==", userId)
+    .collection('recipes')
+    .where('userId', '==', userId)
     .get();
   const recipes = recipeSnapshot.docs.map((recipe) => ({
     id: recipe.id,

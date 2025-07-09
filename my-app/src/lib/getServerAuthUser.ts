@@ -1,9 +1,8 @@
-import { getAuth } from "firebase-admin/auth";
-import { cookies } from "next/headers";
+import { getAuth } from 'firebase-admin/auth';
+import { cookies } from 'next/headers';
 
 export async function getServerAuthUser() {
-
-  const token = (await cookies()).get("token")?.value;
+  const token = (await cookies()).get('token')?.value;
   if (!token) return null;
 
   try {

@@ -14,7 +14,7 @@ interface RegisterFormInputs {
   confirmPassword: string;
 }
 
-export default function page() {
+export default function Page() {
   const {
     register,
     handleSubmit,

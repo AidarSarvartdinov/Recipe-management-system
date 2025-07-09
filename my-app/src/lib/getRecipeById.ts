@@ -1,13 +1,11 @@
-import { Recipe } from "@/types/Recipe";
-import { getFirestore } from "firebase-admin/firestore";
+import { Recipe } from '@/types/Recipe';
+import { getFirestore } from 'firebase-admin/firestore';
 
-export const getRecipeById = async (id: string): Promise<Recipe|null> => {
+export const getRecipeById = async (id: string): Promise<Recipe | null> => {
   const firestore = getFirestore();
-  const recipeDoc = await firestore
-    .collection("recipes").doc(id).get()
+  const recipeDoc = await firestore.collection('recipes').doc(id).get();
 
-
-    if (!recipeDoc.exists) return null;
+  if (!recipeDoc.exists) return null;
 
   const recipe = {
     id: recipeDoc.id,
@@ -17,6 +15,6 @@ export const getRecipeById = async (id: string): Promise<Recipe|null> => {
     products: recipeDoc.data()?.products,
   };
   console.log(recipe);
-  
+
   return recipe;
 };

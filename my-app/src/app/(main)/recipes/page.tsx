@@ -2,11 +2,10 @@ import Card from "@/components/Card";
 import React from "react";
 import { initAdmin } from "../../../../firebase/firebaseAdmin";
 import { getAllRecipies } from "@/lib/getAllRecipes";
-import { getAuth } from "firebase-admin/auth";
 import { getServerAuthUser } from "@/lib/getServerAuthUser";
 import Link from "next/link";
 
-const page = async () => {
+const Page = async () => {
   await initAdmin();
   const user = await getServerAuthUser();
   if (!user) return <h1 className="text-xl">You are not authorized</h1>;
@@ -28,4 +27,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

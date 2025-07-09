@@ -1,20 +1,21 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/Button";
-import React, { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { app, auth } from "../../../../../firebase/firebaseConfig";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { Button } from '@/components/Button';
+import React, { useState } from 'react';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { app, auth } from '../../../../../firebase/firebaseConfig';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
 
-const MEASURE_UNITS = ["kg", "g", "l", "ml", "tbsp", "tsp", "pcs"] as const;
+const MEASURE_UNITS = ['kg', 'g', 'l', 'ml', 'tbsp', 'tsp', 'pcs'] as const;
 
-const imgUrl = "https://www.allrecipes.com/thmb/lhDMaQOTgVgojQABCMV4iIVE_0Q=/771x514/filters:no_upscale():max_bytes(150000):strip_icc():focal(399x0:401x2):format(webp)/3220117_Grilled-Cod-with-Spinach-and-Tomatoes-photo-by-KGora-resize-6f25f6973ddb4ad999524ceb0fddd156.jpg"
+const imgUrl =
+  'https://www.allrecipes.com/thmb/lhDMaQOTgVgojQABCMV4iIVE_0Q=/771x514/filters:no_upscale():max_bytes(150000):strip_icc():focal(399x0:401x2):format(webp)/3220117_Grilled-Cod-with-Spinach-and-Tomatoes-photo-by-KGora-resize-6f25f6973ddb4ad999524ceb0fddd156.jpg';
 
 type Unit = (typeof MEASURE_UNITS)[number];
 
 interface Product {
   name: string;
-  quantity: number | "";
+  quantity: number | '';
   unit: Unit;
 }
 
@@ -24,7 +25,7 @@ interface Recipe {
   products: Product[];
 }
 
-const page = () => {
+const AddRecipePage = () => {
   const {
     register,
     control,
@@ -33,13 +34,13 @@ const page = () => {
     reset,
   } = useForm<Recipe>({
     defaultValues: {
-      products: [{ name: "", quantity: "", unit: "pcs" }],
+      products: [{ name: '', quantity: '', unit: 'pcs' }],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "products",
+    name: 'products',
   });
 
   const firestore = getFirestore(app);
@@ -52,9 +53,9 @@ const page = () => {
     setLoading(true);
     try {
       const user = auth.currentUser;
-      if (!user) throw new Error("You must be logged in");
+      if (!user) throw new Error('You must be logged in');
 
-      await addDoc(collection(firestore, "recipes"), {
+      await addDoc(collection(firestore, 'recipes'), {
         title: data.title,
         description: data.description,
         products: data.products,
@@ -63,17 +64,16 @@ const page = () => {
       });
 
       reset();
-      alert("Recipe created successfully!");
+      alert('Recipe created successfully!');
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMsg(error.message);
       } else {
-        setErrorMsg("Something went wrong");
+        setErrorMsg('Something went wrong');
       }
     } finally {
       setLoading(false);
     }
-    
   };
   return (
     <form
@@ -86,10 +86,10 @@ const page = () => {
         </label>
         <input
           id="title"
-          {...register("title", { required: "Title is required" })}
+          {...register('title', { required: 'Title is required' })}
           placeholder="Enter the title"
           className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring ${
-            errors.title ? "border-red-500" : "border-gray-300"
+            errors.title ? 'border-red-500' : 'border-gray-300'
           }`}
         />
         {errors.title && (
@@ -103,11 +103,11 @@ const page = () => {
         </label>
         <textarea
           id="description"
-          {...register("description", { required: "Description is required" })}
+          {...register('description', { required: 'Description is required' })}
           placeholder="Describe the recipe"
           rows={4}
           className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring ${
-            errors.description ? "border-red-500" : "border-gray-300"
+            errors.description ? 'border-red-500' : 'border-gray-300'
           }`}
         />
         {errors.description && (
@@ -120,34 +120,37 @@ const page = () => {
       <div>
         <label className="block text-sm font-medium mb-2">Products</label>
         {fields.map((field, index) => (
-          <div key={field.id} className="flex flex-col md:flex-row gap-3 mb-10 md:items-center">
+          <div
+            key={field.id}
+            className="flex flex-col md:flex-row gap-3 mb-10 md:items-center"
+          >
             <input
               {...register(`products.${index}.name` as const, {
-                required: "Product name is required",
+                required: 'Product name is required',
               })}
               placeholder="Product name"
               className={`flex-1 border rounded px-3 py-2 focus:outline-none focus:ring ${
                 errors.products?.[index]?.name
-                  ? "border-red-500"
-                  : "border-gray-300"
+                  ? 'border-red-500'
+                  : 'border-gray-300'
               }`}
             />
             <input
               type="number"
               step="any"
               {...register(`products.${index}.quantity` as const, {
-                required: "Quantity is required",
+                required: 'Quantity is required',
                 min: {
                   value: 0.00001,
-                  message: "Quantity must be greater than 0",
+                  message: 'Quantity must be greater than 0',
                 },
                 valueAsNumber: true,
               })}
               placeholder=""
               className={`w-24 border rounded px-3 py-2 focus:outline-none focus:ring ${
                 errors.products?.[index]?.quantity
-                  ? "border-red-500"
-                  : "border-gray-300"
+                  ? 'border-red-500'
+                  : 'border-gray-300'
               }`}
             />
             <select
@@ -170,13 +173,14 @@ const page = () => {
             </button>
           </div>
         ))}
-        <Button variant="secondary" onClick={() => append({ name: "", quantity: "", unit: "pcs" })}>
+        <Button
+          variant="secondary"
+          onClick={() => append({ name: '', quantity: '', unit: 'pcs' })}
+        >
           Add a product
         </Button>
       </div>
-      <div>
-        {errorMsg}
-      </div>
+      <div>{errorMsg}</div>
       <div>
         <Button type="submit">
           {loading ? <span>Loading</span> : <span>Submit</span>}
@@ -186,4 +190,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AddRecipePage;

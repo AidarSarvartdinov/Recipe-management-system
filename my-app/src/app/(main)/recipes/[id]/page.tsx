@@ -6,7 +6,7 @@ interface Props {
   params: { id: string };
 }
 
-const page: React.FC<Props> = async ({ params }) => {
+const Page: React.FC<Props> = async ({ params }) => {
   await initAdmin();
   const {id} = await params;
   const recipe = await getRecipeById(id);
@@ -37,4 +37,4 @@ const page: React.FC<Props> = async ({ params }) => {
   );
 };
 
-export default page;
+export default Page;

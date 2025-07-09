@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import React from "react";
-import { Button } from "./Button";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase/firebaseConfig";
-import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+import Link from 'next/link';
+import React from 'react';
+import { Button } from './Button';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebaseConfig';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
 
 const Header: React.FC = () => {
   const [isOpen, setIsopen] = React.useState(false);
@@ -16,12 +16,11 @@ const Header: React.FC = () => {
   const logout = async () => {
     try {
       signOut(auth);
-    await fetch("/api/logout", { method: "POST" });
+      await fetch('/api/logout', { method: 'POST' });
 
-    router.push("/login");
+      router.push('/login');
     } catch (error) {
-      console.log("Error: ", error);
-      
+      console.log('Error: ', error);
     }
   };
 

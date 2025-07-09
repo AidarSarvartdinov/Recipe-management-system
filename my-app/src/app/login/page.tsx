@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../firebase/firebaseConfig";
-import { Button } from "@/components/Button";
-import Input from "@/components/Input";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebase/firebaseConfig';
+import { Button } from '@/components/Button';
+import Input from '@/components/Input';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface LoginFormInputs {
   email: string;
@@ -29,20 +29,24 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     setFirebaseError(null);
     try {
-      const cred = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const cred = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
       const token = await cred.user.getIdToken();
-      await fetch("/api/session", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({token})
-      })
+      await fetch('/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
       reset();
-      router.push("/recipes/my");
+      router.push('/recipes/my');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setFirebaseError("Invalid credentials");
+        setFirebaseError('Invalid credentials');
       } else {
-        setFirebaseError("Unknown error occurred");
+        setFirebaseError('Unknown error occurred');
       }
     }
   };
@@ -58,11 +62,11 @@ export default function LoginPage() {
             label="Email"
             placeholder="you@example.com"
             error={errors.email}
-            {...register("email", {
-              required: "Email is required",
+            {...register('email', {
+              required: 'Email is required',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Please enter a valid email address",
+                message: 'Please enter a valid email address',
               },
             })}
           />
@@ -73,8 +77,8 @@ export default function LoginPage() {
             label="Password"
             placeholder="Enter your password"
             error={errors.password}
-            {...register("password", {
-              required: "Password is required",
+            {...register('password', {
+              required: 'Password is required',
             })}
           />
 
@@ -88,7 +92,7 @@ export default function LoginPage() {
 
           <div className="flex justify-center">
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Loading..." : "Login"}
+              {isSubmitting ? 'Loading...' : 'Login'}
             </Button>
           </div>
         </form>
