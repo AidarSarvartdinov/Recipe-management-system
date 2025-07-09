@@ -1,74 +1,78 @@
 import Card from "@/components/Card";
 import { title } from "process";
 import React from "react";
+import { initAdmin } from "../../../../firebase/firebaseAdmin";
+import { getAllRecipies } from "@/lib/getAllRecipes";
 
-const recipes = [
-  {
-    id: 1,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 2,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 3,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 4,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 5,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 6,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 7,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 8,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-  {
-    id: 9,
-    title: "Some title of some recipe",
-    img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
-  },
-];
+// const recipes = [
+//   {
+//     id: 1,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 2,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 3,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 4,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 5,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 6,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 7,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 8,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+//   {
+//     id: 9,
+//     title: "Some title of some recipe",
+//     img: "https://rare-gallery.com/uploads/posts/851971-Fish-Food-Potato-Vegetables-Lemons-Salmon-Plate.jpg",
+//     description:
+//       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem expedita laboriosam dolorem. Magnam nesciunt sapiente, sit officiis dolorem debitis saepe dignissimos placeat soluta ea praesentium animi, cumque nobis adipisci reprehenderit.",
+//   },
+// ];
 
-const page = () => {
+const page = async () => {
+  await initAdmin();
+  const recipes = await getAllRecipies();
   return (
     <div className="m-2 sm:grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
       {recipes.map((recipe) => (

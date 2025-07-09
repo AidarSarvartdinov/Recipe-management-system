@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/firebaseConfig";
 import { Button } from "@/components/Button";
 import Input from "@/components/Input";
+import { useRouter } from "next/navigation";
 
 interface RegisterFormInputs {
   email: string;
@@ -25,13 +26,14 @@ export default function page() {
   const [firebaseError, setFirebaseError] = useState<string | null>(null);
   const password = watch("password", "");
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
     setFirebaseError(null);
     try {
       const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
       console.log(res);
-      
-      alert("Registered successfully");
+      router.push("/recipes/my");
       reset()
     } catch (error: unknown) {
         if (error instanceof Error) {

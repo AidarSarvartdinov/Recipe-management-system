@@ -3,13 +3,21 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./Button";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
 
-interface Props {
-  username: string;
-}
-
-const Header: React.FC<Props> = ({ username }) => {
+const Header: React.FC = () => {
   const [isOpen, setIsopen] = React.useState(false);
+  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  const logout = () => {
+    signOut(auth);
+    router.push("/login");
+  };
+
   return (
     <>
       <nav className="bg-white shadow-md px-4 py-2">
@@ -17,8 +25,11 @@ const Header: React.FC<Props> = ({ username }) => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="">
-                <Link href="#" className="text-xl pl-2 font-bold text-gray-800">
-                  {username}
+                <Link
+                  href="/recipes/my"
+                  className="text-xl pl-2 font-bold text-gray-800"
+                >
+                  {user?.email}
                 </Link>
               </div>
             </div>
@@ -39,12 +50,12 @@ const Header: React.FC<Props> = ({ username }) => {
                 <Link href="/recipes/add">
                   <Button>Add Recipe</Button>
                 </Link>
-                <Link
-                  href="#"
-                  className="font-light text-gray-600 hover:text-gray-900 ml-8"
+                <button
+                  onClick={logout}
+                  className="font-light text-gray-600 ml-8 cursor-pointer"
                 >
                   Logout
-                </Link>
+                </button>
               </div>
             </div>
             <div className="md:hidden flex items-center">
@@ -99,9 +110,12 @@ const Header: React.FC<Props> = ({ username }) => {
               <Link href="/recipes/add" className="text-orange-700 p-1 block">
                 Add Recipe
               </Link>
-              <Link href="#" className="font-light text-gray-600 p-1 block">
+              <button
+                onClick={logout}
+                className="font-light text-gray-600 p-1 block"
+              >
                 Logout
-              </Link>
+              </button>
             </div>
           </div>
         )}

@@ -28,13 +28,18 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     setFirebaseError(null);
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      alert("Logged in successfully!");
+      const cred = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const token = await cred.user.getIdToken();
+      await fetch("/api/session", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({token})
+      })
       reset();
       router.push("/recipes/my");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setFirebaseError(error.message);
+        setFirebaseError("Invalid credentials");
       } else {
         setFirebaseError("Unknown error occurred");
       }

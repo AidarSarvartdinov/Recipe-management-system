@@ -1,35 +1,16 @@
 import React from "react";
+import { initAdmin } from "../../../../../firebase/firebaseAdmin";
+import { getRecipeById } from "@/lib/getRecipeById";
 
-const recipe = {
-  title: "Яичница с баклажанами и помидорами",
-  description:
-    "Разнообразьте свое утреннее меню, добавив овощи в обычную яичницу. Хорошим сочетанием будет смесь баклажанов и томатов. Обжарьте нарезанные овощи на сковороде, а затем залейте яйцами и дождитесь, когда они приготовятся до нужной консистенции.",
-  img: "https://cdn.food.ru/unsigned/fit/2048/1536/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDI1MDYxNS80U01SVXguanBlZw.webp",
-  products: [
-    {
-      name: "Помидор",
-      quantity: 2,
-      unit: "шт",
-    },
-    {
-      name: "Баклажан",
-      quantity: 120,
-      unit: "гр",
-    },
-    {
-      name: "Яйцо",
-      quantity: 2,
-      unit: "шт",
-    },
-    {
-      name: "Растительное масло",
-      quantity: 4,
-      unit: "ст. л.",
-    },
-  ],
-};
+interface Props {
+  params: { id: string };
+}
 
-const page = () => {
+const page: React.FC<Props> = async ({ params }) => {
+  await initAdmin();
+  const {id} = await params;
+  const recipe = await getRecipeById(id);
+  if (!recipe) return <p>No such recipe</p>
   return (
     <div className="flex flex-col items-center p-6">
       <div className="w-full flex justify-center rounded-2xl overflow-hidden max-w-[600px]">
@@ -37,7 +18,9 @@ const page = () => {
       </div>
 
       <div className="w-full max-w-[600px] mt-6">
-        <h1 className="text-xl sm:text-3xl font-bold text-center mb-4">{recipe.title}</h1>
+        <h1 className="text-xl sm:text-3xl font-bold text-center mb-4">
+          {recipe.title}
+        </h1>
 
         <p className="text-gray-700 text-center mb-6">{recipe.description}</p>
 

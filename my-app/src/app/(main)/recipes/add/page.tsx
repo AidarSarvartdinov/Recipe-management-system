@@ -1,10 +1,14 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { app, auth } from "../../../../../firebase/firebaseConfig";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 const MEASURE_UNITS = ["kg", "g", "l", "ml", "tbsp", "tsp", "pcs"] as const;
+
+const imgUrl = "https://www.allrecipes.com/thmb/lhDMaQOTgVgojQABCMV4iIVE_0Q=/771x514/filters:no_upscale():max_bytes(150000):strip_icc():focal(399x0:401x2):format(webp)/3220117_Grilled-Cod-with-Spinach-and-Tomatoes-photo-by-KGora-resize-6f25f6973ddb4ad999524ceb0fddd156.jpg"
 
 type Unit = (typeof MEASURE_UNITS)[number];
 
@@ -16,7 +20,6 @@ interface Product {
 
 interface Recipe {
   title: string;
-  img: FileList | null;
   description: string;
   products: Product[];
 }
@@ -27,11 +30,9 @@ const page = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Recipe>({
     defaultValues: {
-      title: "",
-      img: null,
-      description: "",
       products: [{ name: "", quantity: "", unit: "pcs" }],
     },
   });
@@ -41,9 +42,37 @@ const page = () => {
     name: "products",
   });
 
-  const onSubmit: SubmitHandler<Recipe> = (data) => {
-    console.log(data);
-    console.log(data.img?.[0]);
+  const firestore = getFirestore(app);
+
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const onSubmit: SubmitHandler<Recipe> = async (data) => {
+    setErrorMsg(null);
+    setLoading(true);
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("You must be logged in");
+
+      await addDoc(collection(firestore, "recipes"), {
+        title: data.title,
+        description: data.description,
+        products: data.products,
+        img: imgUrl,
+        userId: user.uid,
+      });
+
+      reset();
+      alert("Recipe created successfully!");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
+      } else {
+        setErrorMsg("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
+    }
     
   };
   return (
@@ -65,27 +94,6 @@ const page = () => {
         />
         {errors.title && (
           <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
-        )}
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1" htmlFor="img">
-          Image
-        </label>
-        <input
-          id="img"
-          type="file"
-          accept="image/*"
-          {...register("img", { required: "Image is required" })}
-          className={`block w-full text-sm text-gray-600
-            file:mr-4 file:py-2 file:px-4 file:cursor-pointer
-            file:rounded file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-50 file:text-orange-600
-            hover:file:bg-blue-100
-            ${errors.img ? "border-red-500" : ""}`}
-        />
-        {errors.img && (
-          <p className="text-red-500 text-sm mt-1">{errors.img.message}</p>
         )}
       </div>
 
@@ -167,8 +175,11 @@ const page = () => {
         </Button>
       </div>
       <div>
+        {errorMsg}
+      </div>
+      <div>
         <Button type="submit">
-          Subbmit
+          {loading ? <span>Loading</span> : <span>Submit</span>}
         </Button>
       </div>
     </form>
