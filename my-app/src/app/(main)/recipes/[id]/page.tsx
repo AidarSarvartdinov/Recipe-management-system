@@ -1,16 +1,16 @@
-import React from "react";
-import { initAdmin } from "../../../../../firebase/firebaseAdmin";
-import { getRecipeById } from "@/lib/getRecipeById";
+import React from 'react';
+import { initAdmin } from '../../../../../firebase/firebaseAdmin';
+import { getRecipeById } from '@/lib/getRecipeById';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const Page: React.FC<Props> = async ({ params }) => {
   await initAdmin();
-  const {id} = await params;
+  const { id } = await params;
   const recipe = await getRecipeById(id);
-  if (!recipe) return <p>No such recipe</p>
+  if (!recipe) return <p>No such recipe</p>;
   return (
     <div className="flex flex-col items-center p-6">
       <div className="w-full flex justify-center rounded-2xl overflow-hidden max-w-[600px]">

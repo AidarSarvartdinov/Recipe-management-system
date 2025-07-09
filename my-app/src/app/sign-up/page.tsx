@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../firebase/firebaseConfig";
-import { Button } from "@/components/Button";
-import Input from "@/components/Input";
-import { useRouter } from "next/navigation";
+import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebase/firebaseConfig';
+import { Button } from '@/components/Button';
+import Input from '@/components/Input';
+import { useRouter } from 'next/navigation';
 
 interface RegisterFormInputs {
   email: string;
@@ -20,32 +20,36 @@ export default function Page() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<RegisterFormInputs>();
 
-  const [firebaseError, setFirebaseError] = useState<string | null>(null);;
+  const [firebaseError, setFirebaseError] = useState<string | null>(null);
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
     setFirebaseError(null);
     try {
-      const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
       console.log(res);
       const token = await res.user.getIdToken();
-      await fetch("/api/session", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({token})
-      })
-      router.push("/recipes/my");
-      reset()
+      await fetch('/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      router.push('/recipes/my');
+      reset();
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            setFirebaseError(error.message);
-        } else {
-            setFirebaseError("Something went wrong");
-        }
+      if (error instanceof Error) {
+        setFirebaseError(error.message);
+      } else {
+        setFirebaseError('Something went wrong');
+      }
     }
   };
 
@@ -54,18 +58,17 @@ export default function Page() {
       <div className="max-w-md w-full bg-white p-8 rounded shadow">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign up</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
           <Input
             id="email"
             type="email"
             label="Email"
             placeholder="you@example.com"
             error={errors.email}
-            {...register("email", {
-              required: "Email is required",
+            {...register('email', {
+              required: 'Email is required',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Please enter a valid email address",
+                message: 'Please enter a valid email address',
               },
             })}
           />
@@ -76,11 +79,11 @@ export default function Page() {
             label="Password"
             placeholder="Enter your password"
             error={errors.password}
-            {...register("password", {
-              required: "Password is required",
+            {...register('password', {
+              required: 'Password is required',
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters",
+                message: 'Password must be at least 6 characters',
               },
             })}
           />
@@ -91,10 +94,10 @@ export default function Page() {
             label="Confirm Password"
             placeholder="Confirm your password"
             error={errors.confirmPassword}
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
+            {...register('confirmPassword', {
+              required: 'Please confirm your password',
               validate: (value) =>
-                value === watch("password") || "Passwords do not match",
+                value === watch('password') || 'Passwords do not match',
             })}
           />
 
@@ -104,7 +107,7 @@ export default function Page() {
 
           <div className="flex justify-center">
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Loading..." : "Sign up"}
+              {isSubmitting ? 'Loading...' : 'Sign up'}
             </Button>
           </div>
         </form>
