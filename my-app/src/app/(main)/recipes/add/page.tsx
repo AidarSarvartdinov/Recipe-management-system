@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { app, auth } from '../../../../../firebase/firebaseConfig';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
@@ -29,9 +29,11 @@ interface Recipe {
 const AddRecipePage = () => {
   const router = useRouter();
 
-  if (!auth.currentUser) {
-    router.push('/login');
-  }
+  useEffect(() => {
+    if (!auth.currentUser) {
+      router.push('/login');
+    }
+  }, []);
 
   const {
     register,
