@@ -27,9 +27,8 @@ interface Recipe {
 }
 
 const AddRecipePage = () => {
-
   const router = useRouter();
-  
+
   if (!auth.currentUser) {
     router.push('/login');
   }

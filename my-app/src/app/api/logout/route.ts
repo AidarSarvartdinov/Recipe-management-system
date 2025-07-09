@@ -4,5 +4,5 @@ import { NextResponse } from 'next/server';
 export async function POST() {
   const cookie = await cookies();
   cookie.delete('token');
-  return NextResponse.json({msg:"logged out"})
+  return NextResponse.json({ msg: 'logged out' });
 }
