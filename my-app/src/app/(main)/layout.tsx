@@ -8,7 +8,7 @@ const layout = ({
 }>) => {
   return (
     <div>
-        <Header username="Aidar" />
+        <Header />
         <main>{children}</main>
     </div>
   );

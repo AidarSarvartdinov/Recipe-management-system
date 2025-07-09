@@ -13,9 +13,16 @@ const Header: React.FC = () => {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
-  const logout = () => {
-    signOut(auth);
+  const logout = async () => {
+    try {
+      signOut(auth);
+    await fetch("/api/logout", { method: "POST" });
+
     router.push("/login");
+    } catch (error) {
+      console.log("Error: ", error);
+      
+    }
   };
 
   return (

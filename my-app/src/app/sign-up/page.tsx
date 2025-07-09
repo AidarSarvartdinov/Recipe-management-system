@@ -33,6 +33,12 @@ export default function page() {
     try {
       const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
       console.log(res);
+      const token = await res.user.getIdToken();
+      await fetch("/api/session", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({token})
+      })
       router.push("/recipes/my");
       reset()
     } catch (error: unknown) {

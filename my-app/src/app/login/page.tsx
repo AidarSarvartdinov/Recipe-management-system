@@ -7,6 +7,7 @@ import { auth } from "../../../firebase/firebaseConfig";
 import { Button } from "@/components/Button";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface LoginFormInputs {
   email: string;
@@ -80,6 +81,10 @@ export default function LoginPage() {
           {firebaseError && (
             <p className="text-red-600 text-center text-sm">{firebaseError}</p>
           )}
+
+          <div className="text-gray-600 flex justify-center">
+            <Link href="/sign-up">Sign up</Link>
+          </div>
 
           <div className="flex justify-center">
             <Button type="submit" disabled={isSubmitting}>
