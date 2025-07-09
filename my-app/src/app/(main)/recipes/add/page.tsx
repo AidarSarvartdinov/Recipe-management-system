@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { app, auth } from '../../../../../firebase/firebaseConfig';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 
 const MEASURE_UNITS = ['kg', 'g', 'l', 'ml', 'tbsp', 'tsp', 'pcs'] as const;
 
@@ -27,8 +28,10 @@ interface Recipe {
 
 const AddRecipePage = () => {
 
+  const router = useRouter();
+  
   if (!auth.currentUser) {
-    return <h1>You are not authorized</h1>
+    router.push('/login');
   }
 
   const {
